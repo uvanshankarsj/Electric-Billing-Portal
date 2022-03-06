@@ -1,4 +1,4 @@
-<?php include_once 'includes/dbh.inc.php'; ?>
+<?php include_once 'movies.php'; ?>
 <!DOCTYPE html>
 <html>
 
@@ -41,9 +41,9 @@
 </head>
 <body style="background-image:url('image.png');background-repeat: no-repeat;background-size:cover;">
 	<h1 style="font-size:75px;">Announcement<h1>
-<form action="announcement.php" method="get" >
+<form action="enter announcement.php" method="get" >
   <label for="fname" default="none" >Street Name : </label>
-  <select name="st_name" id="st_name" style = " height : 30px;" onchange = "this.form.submit()">
+  <select name="st_name" id="st_name" style = " height : 30px;" onsubmit = "this.form.submit()">
   <option value="All">Select Street Name</option>
   <option value="All">All</option>
   <option value="Edmonton"> Edmonton</option>
@@ -55,37 +55,31 @@
   <option value="remura_st">remura_st</option>
   <option value="Vallalar">Vallalar</option>
 </select>
+<form action="enter announcement.php" method="get" >
+  <label for="admin_id" default="none" >Admin_ID : </label>
+  <select name="adminid" id="adminid" style = " height : 30px;" onSubmit = "this.form.submit()">
+  <option value="none">Select cust ID</option>
+  <option value="A1">A1</option>
+  <option value="A2">A2</option>
+  <option value="A3">A3</option>
+</select>
+<label for="fname" default="none" >Announcement: </label>
+<input type="text" id="message" name="message" style="height:40px; width: 400px">
+<br>
+<input type="submit" value="Submit">
 <br>
 </form> 
-<table  cellpadding="0" cellspacing="0" border="0">
-        <tr>
-        <th >Street Name</th>
-        <th >Announcement</th>
-        <th>Admin ID</th>
-        </tr>
 <?php
 if (empty($_GET)){
-    $name = 'All';
+
 }
 else{
     $name = $_GET['st_name'];
+	$message= $_GET['message'];
+	$custid=$_GET['adminid'];
+    $sql="UPDATE announcement SET message ='$message' WHERE st_name= '$name';";
+	$result=mysqli_query($conn,$sql);
 }
-if($name == 'All' or $name == ''){
-    $sql="select * from announcement;";
-}
-else{
-    $sql="select * from announcement where st_name='$name';";
-}
-
-$result=mysqli_query($conn,$sql);
-echo "<tr>";
-while($row=mysqli_fetch_assoc($result)){
-	foreach ($row as $field => $value) { 
-        echo "<td>" . $value . "</td>";  
-    }
-	echo"</tr>";
-}
-echo"</table>";
 ?>
 </table>
 </body>

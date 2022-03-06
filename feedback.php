@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>announcement</title>
+	<title>Feedback</title>
 	<style>
 		table {
 			text-align : center;
@@ -38,43 +38,40 @@
 		    vertical-align: middle;
 		}
 	</style>
+</style>
 </head>
-<body style="background-image:url('image.png');background-repeat: no-repeat;background-size:cover;">
-	<h1 style="font-size:75px;">Announcement<h1>
-<form action="announcement.php" method="get" >
-  <label for="fname" default="none" >Street Name : </label>
-  <select name="st_name" id="st_name" style = " height : 30px;" onchange = "this.form.submit()">
-  <option value="All">Select Street Name</option>
+<body style="background-image:url('image.png');background-size: cover;background-repeat: no-repeat;">
+<h1 style="font-size:75px;">Feed back<h1>
+<form   action="feedback.php" method="get" sub>
+<label for="fname" default="none" >Cust_ID : </label>
+  <select name = "cust_id" id = "cust_id"  style = " height : 30px;"onchange = "this.form.submit()" >
+  <option value="All" selected disabled hidden>Select Customer ID</option>
   <option value="All">All</option>
-  <option value="Edmonton"> Edmonton</option>
-  <option value="EL Plazzo"> EL Plazzo</option>
-  <option value="Lol_st">Lol_st</option>
-  <option value="Eunumera_st">Eunumera_st</option>
-  <option value="Mogami">Mogami</option>
-  <option value="Othello"> Othello</option>
-  <option value="remura_st">remura_st</option>
-  <option value="Vallalar">Vallalar</option>
+  <option value="C1">C1</option>
+  <option value="C2">C2</option>
+  <option value="C3">C3</option>
+  <option value="C4">C4</option>
 </select>
 <br>
 </form> 
-<table  cellpadding="0" cellspacing="0" border="0">
+<table>
         <tr>
-        <th >Street Name</th>
-        <th >Announcement</th>
-        <th>Admin ID</th>
+        <th>fb_id</th>
+        <th>cust_id</th>
+        <th style="width=20px">feedback</th>
         </tr>
 <?php
 if (empty($_GET)){
-    $name = 'All';
+        $name = 'All';
+    }
+else{
+$name=$_GET['cust_id'];
+} 
+if($name == "All"){
+        $sql="select * from feedback;";
 }
 else{
-    $name = $_GET['st_name'];
-}
-if($name == 'All' or $name == ''){
-    $sql="select * from announcement;";
-}
-else{
-    $sql="select * from announcement where st_name='$name';";
+        $sql="select * from feedback where cust_id='$name';";
 }
 
 $result=mysqli_query($conn,$sql);
@@ -87,7 +84,6 @@ while($row=mysqli_fetch_assoc($result)){
 }
 echo"</table>";
 ?>
-</table>
 </body>
 </html>
 
